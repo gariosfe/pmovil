@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  'Login',
+                  'Sing Up',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'User',
+                    labelText: 'Name',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -63,7 +63,39 @@ class LoginPage extends StatelessWidget {
                 TextField(
                   obscureText: true,
                   decoration: InputDecoration(
+                    labelText: 'Last Name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'birthdate',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
                     labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -85,14 +117,14 @@ class LoginPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don’t have an account?"),
+                    const Text("a"),
                     TextButton(
                       onPressed: () {
                         // Acción para "Sign Up"
                       },
                       child: const Text(
-                        "Sing Up",
-                        style: TextStyle(color: Colors.red),
+                        "You already have an account?",
+                        style: TextStyle(color: Color.fromARGB(255, 28, 35, 247)),
                       ),
                     ),
                   ],
