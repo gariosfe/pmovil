@@ -2,10 +2,12 @@ class Routes {
   // constructor privado
   Routes._();
 
-  static const initialRoute = splash;
+  static const initialRoute = login;
 
   static const splash = '/splash';
   static const login = '/login';
+  
+  
   static const logout = '/logout';
   static const registration = 'registration'; 
   static const profile = '/profile';

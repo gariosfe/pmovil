@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmovil/pages/login_page.dart';
 import 'package:pmovil/pages/reset_password.dart';
 import 'routes.dart';
 
@@ -12,12 +13,9 @@ T getArguments<T>(BuildContext context) {
 // Mapa que define las rutas de la aplicación y sus correspondientes widgets (pantallas)
 Map<String, Widget Function(BuildContext)> get appRoutes {
   return {
-    // Ruta para la pantalla de bienvenida (SplashScreen)
-    Routes.splash: (_) => ResetPasswordPage(),
 
-    // Ruta para la página de inicio de sesión
-    Routes.login: (_) => ResetPasswordPage(),
+    Routes.splash: (_) => const ResetPasswordPage(),
+    Routes.login: (_) => const LoginPage(),
 
-    
   };
 }
