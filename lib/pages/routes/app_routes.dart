@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pmovil/pages/inicio.dart';
 import 'package:pmovil/pages/login_page.dart';
+import 'package:pmovil/pages/register_page.dart';
+
 import 'package:pmovil/pages/reset_password.dart';
 import 'routes.dart';
 
@@ -16,6 +19,7 @@ Map<String, Widget Function(BuildContext)> get appRoutes {
 
     Routes.splash: (_) => const ResetPasswordPage(),
     Routes.login: (_) => const LoginPage(),
+    Routes.feed: (_) => FeedPage(),
 
   };
 }
