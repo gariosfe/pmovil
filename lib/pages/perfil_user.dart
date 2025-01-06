@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 
 class ProfilePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 11, 61, 77),
