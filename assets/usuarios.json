@@ -1,0 +1,16 @@
+{
+    "usuarios": [
+      {
+        "id": 1,
+        "nombre": "Pedro Lopez",
+        "edad": 25
+      },
+      {
+        "id": 2,
+        "nombre": "Juan Lopez",
+        "edad": 30
+      }
+     
+    ]
+  }
+  
