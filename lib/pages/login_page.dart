@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmovil/pages/reset_password.dart';
+import 'package:pmovil/pages/routes/routes.dart';
 import 'dart:convert';
 import 'reset_password.dart'; 
 
@@ -164,12 +165,13 @@ class _LoginPageState extends State<LoginPage> {
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () {
-                          if (_userController.text.isEmpty ||
+                          Navigator.pushNamed(context, Routes.feed);
+                          /* if (_userController.text.isEmpty ||
                               _passwordController.text.isEmpty) {
                             _showMessage('Por favor completa todos los campos');
                           } else {
                             _login();
-                          }
+                          }*/
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
