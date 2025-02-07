@@ -1,125 +1,113 @@
-import 'package:flutter/material.dart';
+// Importaciones necesarias
+import 'package:firebase_core/firebase_core.dart';       // Firebase Core
+import 'package:firebase_messaging/firebase_messaging.dart'; // Notificaciones Push
+import 'package:flutter/material.dart';                  // Widgets de Flutter
 
-void main() {
-  runApp(const MyApp());
+// Maneja notificaciones recibidas cuando la app está en segundo plano o cerrada
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Notificación recibida en segundo plano: ${message.notification?.title}");
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// Punto de entrada principal de la aplicación
+//El uso de async en void main():
+//  Dentro de la función main() estamos realizando operaciones asíncronas 
+//  que deben completarse antes de que la aplicación se ejecute.
+void main() async {
+  // Necesario para inicializar plugins antes de runApp
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Inicializar Firebase
+  await Firebase.initializeApp();
+  
+  // Configurar manejador de notificaciones en segundo plano
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  
+  // Iniciar la aplicación
+  runApp(MyApp());
+}
 
-  // This widget is the root of your application.
+// Widget principal de la aplicación
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: NotificationPage(), // Pantalla principal
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+// Pantalla para manejar notificaciones push
+class NotificationPage extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _NotificationPageState createState() => _NotificationPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+// Estado de la pantalla de notificaciones
+class _NotificationPageState extends State<NotificationPage> {
+  String? token; // Almacena el token del dispositivo
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    setupPushNotifications(); // Configurar notificaciones al iniciar
+  }
+
+  // Configura todo el sistema de notificaciones push
+  Future<void> setupPushNotifications() async {
+    final messaging = FirebaseMessaging.instance;
+    
+    // PASO 1: Solicitar permisos al usuario
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,   // Mostrar alertas
+      badge: true,   // Mostrar badges
+      sound: true,   // Reproducir sonido
+    );
+    
+    // PASO 2: Obtener token único del dispositivo
+    token = await messaging.getToken();
+    print("Token para enviar notificaciones: $token");
+    
+    // PASO 3: Configurar manejadores de notificaciones
+    
+    // Manejador para notificaciones recibidas EN PRIMER PLANO
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Notificación recibida con la app abierta");
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(message.notification?.title ?? 'Sin título'),
+          content: Text(message.notification?.body ?? 'Sin contenido'),
+        ),
+      );
+    });
+
+    // Manejador para notificaciones abiertas desde SEGUNDO PLANO
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("Usuario abrió la app desde una notificación");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("Configuración de Notificaciones"),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          children: [
+            Text("Tu token único del dispositivo:"),
+            SizedBox(height: 20),
+            // Muestra el token y permite copiarlo
+            SelectableText(
+              token ?? 'Cargando token...',
+              style: TextStyle(fontSize: 16, color: Colors.blue),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

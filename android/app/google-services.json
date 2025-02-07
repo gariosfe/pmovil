@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "868471776047",
+    "project_id": "redsocial-c8b00",
+    "storage_bucket": "redsocial-c8b00.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868471776047:android:338d13a52b8476842d37da",
+        "android_client_info": {
+          "package_name": "com.example.pmovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOPVCrCtbdYTRMxFVv7l6UI9Y-f_tJpOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
