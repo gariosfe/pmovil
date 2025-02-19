@@ -18,28 +18,30 @@ class MyApp extends StatelessWidget {
 
 class ProfilePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 11, 61, 77),
         leading: IconButton(
-          icon: Icon(Icons.home, color: Colors.white),
+          icon: const Icon(Icons.home, color: Colors.white),
           onPressed: () {},
         ),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Icon(Icons.language, color: Colors.white),
+              icon: const Icon(Icons.language, color: Colors.white),
               onPressed: () {},
             ),
+            const SizedBox(width: 20),
             IconButton(
-              icon: Icon(Icons.add_box_outlined, color: Colors.white),
+              icon: const Icon(Icons.add_box_outlined, color: Colors.white),
               onPressed: () {},
             ),
-            IconButton(
-              icon: Icon(Icons.person, color: const Color.fromARGB(255, 7, 153, 216)),
-              onPressed: () {},
+            const SizedBox(width: 20),
+            CircleAvatar(
+              backgroundColor: Colors.grey,
+              radius: 14,
             ),
           ],
         ),
@@ -50,85 +52,111 @@ class ProfilePage extends StatelessWidget {
             // Header Image
             Stack(
               children: [
-                Image.network(
-                  'https://via.placeholder.com/400x200',
+                Container(
                   width: double.infinity,
                   height: 200,
-                  fit: BoxFit.cover,
+                  color: Colors.grey[800],
+                  child: const Center(
+                    child: Icon(Icons.image, color: Colors.grey, size: 50),
+                  ),
                 ),
                 Positioned(
                   bottom: 10,
                   left: 10,
                   child: CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage('lib/img/imagen1.jpg'), // Ruta ajustada
+                    backgroundColor: Colors.grey[600],
+                    child: const Icon(Icons.person, color: Colors.white, size: 40),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // Profile Info
             Column(
               children: [
-                Text(
+                const Text(
                   'Jhon Victor',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
-                      children: [
-                        Text('1', style: TextStyle(color: Colors.white, fontSize: 16)),
-                        Text('Publicaciones', style: TextStyle(color: Colors.white, fontSize: 14)),
+                      children: const [
+                        Text('1',
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 16)),
+                        Text('Publicaciones',
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 14)),
                       ],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 20),
                     Column(
-                      children: [
-                        Text('3', style: TextStyle(color: Colors.white, fontSize: 16)),
-                        Text('Amigos', style: TextStyle(color: Colors.white, fontSize: 14)),
+                      children: const [
+                        Text('3',
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 16)),
+                        Text('Amigos',
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 14)),
                       ],
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 33, 150, 243),
+                      ),
                       onPressed: () {},
-                      child: Text('Configuración'),
+                      child: const Text('Configuración'),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 76, 175, 80),
+                      ),
                       onPressed: () {},
-                      child: Text('Cambiar de perfil'),
+                      child: const Text('Cambiar de perfil'),
                     ),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Tab Bar
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Icon(Icons.grid_on, color: Colors.white),
+                  icon: const Icon(Icons.grid_on, color: Colors.white),
                   onPressed: () {},
                 ),
+                const SizedBox(width: 20),
                 IconButton(
-                  icon: Icon(Icons.play_circle_fill, color: Colors.white),
+                  icon: const Icon(Icons.play_circle_fill, color: Colors.white),
                   onPressed: () {},
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            // Photo Grid
+            const SizedBox(height: 10),
+            // Placeholder for Photo Grid
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
@@ -137,10 +165,12 @@ class ProfilePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage('https://via.placeholder.com/150'),
-                      fit: BoxFit.cover,
-                    ),
+                    color: Colors.grey[800],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.image, color: Colors.grey, size: 50),
                   ),
                 );
               },

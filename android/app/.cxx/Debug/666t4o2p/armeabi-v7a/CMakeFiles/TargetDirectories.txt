@@ -1,0 +1,2 @@
+C:/Users/riosg/Documents/GitHub/PMovil/pmovil/android/app/.cxx/Debug/666t4o2p/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/riosg/Documents/GitHub/PMovil/pmovil/android/app/.cxx/Debug/666t4o2p/armeabi-v7a/CMakeFiles/rebuild_cache.dir

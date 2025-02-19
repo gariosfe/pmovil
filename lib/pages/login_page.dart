@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pmovil/pages/for_you.dart';
 import 'package:pmovil/pages/reset_password.dart';
 import 'package:pmovil/pages/routes/routes.dart';
 import 'dart:convert';
 import 'reset_password.dart'; 
+import '';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
 
   Future<void> _login() async {
-    final String url = 'http://10.0.2.2:3000/api_red/login';
+    final String url = 'https://backent-movil.onrender.com/api_red/login';
 
     setState(() {
       _isLoading = true;
@@ -69,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePage(
+                builder: (context) => FeedPage(
                   token: token,
                   username: username,
                   profilePicture: profilePicture,
@@ -129,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
             margin: const EdgeInsets.symmetric(horizontal: 30),
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
             decoration: BoxDecoration(
-              color: Colors.blueGrey[50],
+              color: const Color.fromARGB(255, 216, 235, 240),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -141,6 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comic Sans MS',
+                    color:   Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -165,13 +168,13 @@ class _LoginPageState extends State<LoginPage> {
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, Routes.feed);
-                          /* if (_userController.text.isEmpty ||
+                          // Navigator.pushNamed(context, Routes.feed);
+                          if (_userController.text.isEmpty ||
                               _passwordController.text.isEmpty) {
                             _showMessage('Por favor completa todos los campos');
                           } else {
                             _login();
-                          }*/
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,

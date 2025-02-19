@@ -51,37 +51,23 @@ class SettingsPage extends StatelessWidget {
             title: const Text('Guardado'),
             onTap: () {},
           ),
-          ListTile(
-            leading: const Icon(Icons.archive),
-            title: const Text('Archivo'),
-            onTap: () {},
-          ),
-          const Divider(),
-
-          // Tu contenido
-          const SectionTitle(title: 'Tu contenido'),
-          ListTile(
-            leading: const Icon(Icons.lock),
-            title: const Text('Privacidad de la cuenta'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.block),
-            title: const Text('Bloqueados'),
-            onTap: () {},
-          ),
           const Divider(),
 
           // Contenido multimedia
           const SectionTitle(title: 'Contenido multimedia'),
-          ListTile(
-            leading: const Icon(Icons.perm_device_information),
-            title: const Text('Permisos del dispositivo'),
-            onTap: () {},
-          ),
+
           ListTile(
             leading: const Icon(Icons.language),
             title: const Text('Idioma'),
+            onTap: () {},
+          ),
+          const Divider(),
+
+          // Temas 
+          const SectionTitle(title: 'Temas'),
+          ListTile(
+            leading:  const Icon(Icons.color_lens),
+            title:  const Text('Temas'),
             onTap: () {},
           ),
           const Divider(),

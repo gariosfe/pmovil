@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
+/* class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,9 +13,17 @@ class MyApp extends StatelessWidget {
       home: FeedPage(),
     );
   }
-}
+ }*/
 
 class FeedPage extends StatelessWidget {
+
+final String token;
+  final String username;
+  final String profilePicture;
+
+  const FeedPage({super.key, required this.token, required this.username, required this.profilePicture});
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
