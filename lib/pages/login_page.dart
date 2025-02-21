@@ -5,7 +5,6 @@ import 'package:pmovil/pages/reset_password.dart';
 import 'package:pmovil/pages/routes/routes.dart';
 import 'dart:convert';
 import 'reset_password.dart'; 
-import '';
 
 void main() {
   runApp(const MyApp());
@@ -112,158 +111,205 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 11, 61, 77),
-              Color.fromARGB(255, 11, 61, 77),
-            ],
-          ),
-        ),
-        child: Center(
+@override
+Widget build(BuildContext context) {
+  const color = Color.fromARGB(255, 11, 61, 77);
+  const accentColor = Color(0xFF64B5F6);
+  
+  return Scaffold(
+    body: Container(
+      decoration: const BoxDecoration(
+        color: color,
+      ),
+      child: Center(
+        child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 30),
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 216, 235, 240),
+              color: Colors.black.withOpacity(0.85),
               borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.1),
+                width: 1,
+              ),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Comic Sans MS',
-                    color:   Color.fromARGB(255, 0, 0, 0),
+                // Logo
+                Container(
+                  height: 100,
+                  width: 100,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.2),
+                      width: 2,
+                    ),
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/img/logo.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
+                // Nombre de la aplicación
+                ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: [color, Color(0xFF2A7A94)],
+                  ).createShader(bounds),
+                  child: const Text(
+                    'PolisVox',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                // Campos de entrada
                 TextField(
                   controller: _userController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: 'Correo electrónico',
+                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: accentColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.05),
                   ),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: 'Contraseña',
+                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: accentColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.05),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                // Botón de Accept
+                Container(
+                  width: double.infinity,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [color, Color(0xFF2A7A94)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_userController.text.isEmpty ||
+                          _passwordController.text.isEmpty) {
+                        _showMessage('Por favor completa todos los campos');
+                      } else {
+                        _login();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
+                        : const Text(
+                            'Aceptar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                _isLoading
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: () {
-                          // Navigator.pushNamed(context, Routes.feed);
-                          if (_userController.text.isEmpty ||
-                              _passwordController.text.isEmpty) {
-                            _showMessage('Por favor completa todos los campos');
-                          } else {
-                            _login();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          padding: const EdgeInsets.symmetric(horizontal: 50),
-                        ),
-                        child: const Text(
-                          'Accept',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                const SizedBox(height: 10),
+                // Enlaces adicionales
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don’t have an account?"),
+                    Text(
+                      "¿No tienes una cuenta?",
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.7),
+                      ),
+                    ),
                     TextButton(
                       onPressed: () {
                         // Redirigir al registro
                       },
                       child: const Text(
-                        "Sign Up",
-                        style: TextStyle(color: Colors.red),
+                        "Registrarse",
+                        style: TextStyle(
+                          color: accentColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                // Enlace para recuperar la contraseña
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResetPasswordPage(),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "¿Olvidaste tu contraseña?",
-                        style: TextStyle(color: Colors.blue),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ResetPasswordPage(),
                       ),
+                    );
+                  },
+                  child: Text(
+                    "¿Olvidaste tu contraseña?",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.7),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
-
-class HomePage extends StatelessWidget {
-  final String token;
-  final String username;
-  final String profilePicture;
-
-  const HomePage({
-    Key? key,
-    required this.token,
-    required this.username,
-    required this.profilePicture,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home Page')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Bienvenido, $username',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            CircleAvatar(
-              backgroundImage: NetworkImage(profilePicture),
-              radius: 50,
-            ),
-            const SizedBox(height: 20),
-            Text('Token: $token'),
-          ],
-        ),
-      ),
-    );
-  }
 }
