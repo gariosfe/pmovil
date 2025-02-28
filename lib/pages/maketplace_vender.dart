@@ -1,3 +1,4 @@
+// vista para crear una publicacion en marketplace que contiene el titulo,precio, categoria,despcripcion y la foto
 import 'package:flutter/material.dart';
 
 void main() {

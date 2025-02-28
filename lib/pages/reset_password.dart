@@ -1,7 +1,28 @@
+// esta no sirve porque ya esta implementada en otro archivo
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Contraseña',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        useMaterial3: true,
+      ),
+      home: const ResetPasswordPage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({Key? key}) : super(key: key);
 

@@ -1,3 +1,4 @@
+// vista para el idioma en este caso solo tenemos dos idiomas que es el español o el ingles
 import 'package:flutter/material.dart';
 
 void main() {

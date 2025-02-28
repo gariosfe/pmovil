@@ -1,3 +1,4 @@
+//se visuliza todo lo del marketplace ademas se podra vender y ver por categorias
 import 'package:flutter/material.dart';
 
 void main() {

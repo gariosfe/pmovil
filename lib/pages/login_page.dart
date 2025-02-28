@@ -1,3 +1,4 @@
+// pagina principal del login donde accedemos ingresando el correo electronico y la contraseña
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pmovil/pages/for_you.dart';
@@ -161,7 +162,7 @@ Widget build(BuildContext context) {
                 // Nombre de la aplicación
                 ShaderMask(
                   shaderCallback: (bounds) => LinearGradient(
-                    colors: [color, Color(0xFF2A7A94)],
+                    colors: [Color(0xFF00796B), Color(0xFF2A7A94)], // Usar el mismo gradiente
                   ).createShader(bounds),
                   child: const Text(
                     'PolisVox',
@@ -214,29 +215,28 @@ Widget build(BuildContext context) {
                   ),
                 ),
                 const SizedBox(height: 30),
-                // Botón de Accept
+                // Botón de Aceptar
                 Container(
                   width: double.infinity,
-                  height: 45,
+                  height: 50, // Aumentar la altura para mayor comodidad
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [color, Color(0xFF2A7A94)],
+                      colors: [Color(0xFF00796B), Color(0xFF2A7A94)], // Usar el mismo gradiente
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: color.withOpacity(0.3),
-                        blurRadius: 10,
+                        color: Color(0xFF00796B).withOpacity(0.5), // Aumentar la opacidad de la sombra
+                        blurRadius: 15,
                         offset: const Offset(0, 5),
                       ),
                     ],
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_userController.text.isEmpty ||
-                          _passwordController.text.isEmpty) {
+                      if (_userController.text.isEmpty || _passwordController.text.isEmpty) {
                         _showMessage('Por favor completa todos los campos');
                       } else {
                         _login();
@@ -251,16 +251,16 @@ Widget build(BuildContext context) {
                     ),
                     child: _isLoading
                         ? const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          )
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    )
                         : const Text(
-                            'Aceptar',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      'Aceptar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),

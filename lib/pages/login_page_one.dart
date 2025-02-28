@@ -1,3 +1,4 @@
+// primer paso para crear una cuenta que cuenta con varios campos entre ellos el username, first name, last name, gemder entre otros campos
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -100,19 +101,34 @@ class _CreateAccountStep1State extends State<CreateAccountStep1> {
 
   @override
   Widget build(BuildContext context) {
+    const color = Color.fromARGB(255, 11, 61, 77);
+    const accentColor = Color(0xFF64B5F6);
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 11, 61, 77),
+      backgroundColor: color,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Aquí Logo",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              // Logo
+              Container(
+                height: 100,
+                width: 100,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.2),
+                    width: 2,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/img/logo.png', // Ruta de la imagen del logo
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -120,168 +136,229 @@ class _CreateAccountStep1State extends State<CreateAccountStep1> {
                 width: MediaQuery.of(context).size.width * 0.85,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE8F7FF),
+                  color: Colors.black.withOpacity(0.85),
                   borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.1),
+                    width: 1,
+                  ),
                 ),
                 child: Column(
                   children: [
-                    const Text(
-                      "Create your account - step 1",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF043955),
-                      ),
+                  const Text(
+                  "Crear tu cuenta - paso 1",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  focusNode: usernameFocus,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: "Nombre de usuario",
+                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
                     ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      focusNode: usernameFocus,
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.05),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  focusNode: firstNameFocus,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: "Primer nombre",
+                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.05),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  focusNode: lastNameFocus,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: "Apellido",
+                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.05),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () => _showDatePicker(context),
+                  child: AbsorbPointer(
+                    child: TextField(
+                      enableInteractiveSelection: false,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: "Username",
+                        labelText: "Fecha de nacimiento",
+                        hintText: selectedDate,
+                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.white.withOpacity(0.05),
                       ),
-                      textInputAction: TextInputAction.next, // Permite avanzar al siguiente campo
+                      textInputAction: TextInputAction.done,
                     ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      focusNode: firstNameFocus,
-                      decoration: InputDecoration(
-                        labelText: "First name",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      textInputAction: TextInputAction.next, // Permite avanzar al siguiente campo
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      focusNode: lastNameFocus,
-                      decoration: InputDecoration(
-                        labelText: "Last name",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      textInputAction: TextInputAction.next, // Permite avanzar al siguiente campo
-                    ),
-                    const SizedBox(height: 10),
-                    GestureDetector(
-                      onTap: () => _showDatePicker(context),
-                      child: AbsorbPointer(
-                        child: TextField(
-                          enableInteractiveSelection: false,
-                          decoration: InputDecoration(
-                            labelText: "Birthdate",
-                            hintText: selectedDate, // Mostrar la fecha seleccionada
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                          textInputAction: TextInputAction.done, // Termina el proceso
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                  ),
+                ),
+                const SizedBox(height: 10),
                     DropdownButtonFormField<String>(
                       value: selectedGender,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedGender = newValue;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: "Gender",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      items: const [
-                        DropdownMenuItem(
-                          value: "Man",
-                          child: Text("Man"),
-                        ),
-                        DropdownMenuItem(
-                          value: "Woman",
-                          child: Text("Woman"),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      focusNode: locationFocus,
-                      decoration: InputDecoration(
-                        labelText: "Location",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      textInputAction: TextInputAction.done, // Termina el proceso
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 10,
-                      ),
-                    ),
-                    onPressed: () {
-                      // Acción para el botón "Back"
-                    },
-                    child: const Text(
-                      "Back",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedGender = newValue;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: "Género",
+                  labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 10,
-                      ),
-                    ),
-                    onPressed: () {
-                      // Acción para el botón "Next"
-                    },
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: Colors.black),
-                    ),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.05),
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: "Hombre",
+                    child: Text("Hombre", style: TextStyle(color: Colors.black)),
+                  ),
+                  DropdownMenuItem(
+                    value: "Mujer",
+                    child: Text("Mujer", style: TextStyle(color: Colors.black)),
                   ),
                 ],
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                focusNode: locationFocus,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: "Ubicación",
+                  labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.05),
+                ),
+                textInputAction: TextInputAction.done,
               ),
             ],
           ),
         ),
+              const SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 150, // Ajusta el ancho según sea necesario
+                    height: 50, // Aumentar la altura para mayor comodidad
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF00796B), Color(0xFF2A7A94)], // Colores más vibrantes
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFF00796B).withOpacity(0.5), // Aumentar la opacidad de la sombra
+                          blurRadius: 15,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Acción para el botón "Atrás"
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Atrás",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 150, // Ajusta el ancho según sea necesario
+                    height: 50, // Aumentar la altura para mayor comodidad
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF00796B), Color(0xFF2A7A94)], // Colores más vibrantes
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFF00796B).withOpacity(0.5), // Aumentar la opacidad de la sombra
+                          blurRadius: 15,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Acción para el botón "Siguiente"
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Siguiente",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+          ),
+        ],
       ),
+    ),
+    ),
     );
   }
 }

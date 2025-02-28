@@ -1,98 +1,198 @@
+// vista de inicio donde se pueden visualizar todos los post
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const MyApp());
+}
 
-class FeedPage extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: AppBar(
-          backgroundColor: Colors.teal,
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.home, color: Colors.white),
-              Icon(Icons.language, color: Colors.white),
-              Icon(Icons.add_circle, color: Colors.white),
-              Icon(Icons.notifications, color: Colors.white),
-              Icon(Icons.person, color: Colors.white),
-            ],
-          ),
-        ),
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return PostCard(
-            name: index % 2 == 0 ? "Bruna S." : "Brandon A.",
-            imageUrl: index % 2 == 0
-                ? 'https://images.unsplash.com/photo-1584996673462-1db03781c16e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400'
-                : 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ...",
-            timeAgo: "Posted ${index + 2} hr ago",
-          );
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: const FeedPage(),
     );
   }
 }
 
-class PostCard extends StatelessWidget {
-  final String name;
-  final String imageUrl;
-  final String description;
-  final String timeAgo;
-
-  const PostCard({
-    required this.name,
-    required this.imageUrl,
-    required this.description,
-    required this.timeAgo,
-  });
+class FeedPage extends StatelessWidget {
+  const FeedPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Column(
         children: [
-          ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=${name.hashCode % 70}'),
+          // Barra superior
+          Container(
+            color: const Color.fromARGB(255, 11, 61, 77),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  // Barra de navegación principal
+                  Container(
+                    height: 60,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildNavIcon(Icons.home_outlined), // Icono de inicio
+                        _buildNavIcon(Icons.language), // Icono de idioma
+                        _buildAddButton(), // Botón de añadir
+                        _buildMarketplaceIcon(), // Icono del mercado
+                        _buildProfilePicture(), // Imagen de perfil
+                        _buildNavIcon(Icons.menu), // Icono de menú
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-            trailing: Icon(Icons.more_vert),
           ),
-          Image.network(imageUrl, fit: BoxFit.cover, width: double.infinity, height: 200),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(description),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Contenido principal
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(8.0),
               children: [
-                Text(timeAgo, style: TextStyle(color: Colors.grey)),
-                Row(
-                  children: [
-                    Icon(Icons.favorite_border, color: Colors.grey),
-                    SizedBox(width: 5),
-                    Text("50"),
-                    SizedBox(width: 15),
-                    Icon(Icons.comment, color: Colors.grey),
-                  ],
-                ),
+                _buildPostCard("youraccount", "Location Here", "Enhance your Instagram with our UI Mockup Download for Instagram creativity.", "12,853 likes", "150 comments"),
+                const SizedBox(height: 10),
+                _buildPostCard("anotheraccount", "Another Location", "Check out our latest designs and updates!", "5,432 likes", "75 comments"),
+                const SizedBox(height: 10),
+                _buildPostCard("user123", "Beach Vibes", "Enjoying the sun and sand at the beach!", "8,765 likes", "200 comments"),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildNavIcon(IconData icon) {
+    return IconButton(
+      icon: Icon(icon, color: Colors.white), // Color blanco para los iconos
+      onPressed: () {
+        // Acción del icono
+      },
+    );
+  }
+
+  Widget _buildAddButton() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white, width: 2), // Borde blanco
+        borderRadius: BorderRadius.circular(8), // Bordes redondeados
+      ),
+      child: const Center(
+        child: Icon(Icons.add, color: Colors.white), // Icono blanco centrado
+      ),
+    );
+  }
+
+  Widget _buildMarketplaceIcon() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.white, // Fondo blanco
+        borderRadius: BorderRadius.circular(8), // Bordes redondeados
+      ),
+      child: const Icon(
+        Icons.store,
+        color: Colors.blue, // Color azul para el icono del mercado
+      ),
+    );
+  }
+
+  Widget _buildProfilePicture() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2), // Borde blanco
+      ),
+      child: ClipOval(
+        child: Container(
+          color: Colors.grey[800],
+          child: const Icon(Icons.person, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPostCard(String username, String location, String content, String likes, String comments) {
+    return Card(
+      color: const Color(0xFF1E1E1E), // Color de fondo del post
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 5,
+      shadowColor: Colors.black54, // Sombra sutil
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.grey[300],
+                  child: const Icon(Icons.person, color: Colors.black), // Icono de usuario
+                ),
+                const SizedBox(width: 8),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      username,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+                    ),
+                    Text(
+                      location,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Container(
+              height: 200, // Altura del espacio para la imagen
+              decoration: BoxDecoration(
+                color: Colors.grey[300], // Color de fondo para el espacio de la imagen
+                borderRadius: BorderRadius.circular(10), // Bordes redondeados
+              ),
+              child: const Center(
+                child: Icon(Icons.image, color: Colors.black, size: 50), // Icono de imagen
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              content,
+              style: const TextStyle(color: Colors.white), // Color del texto
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.favorite, color: Colors.red), // Icono de likes
+                    const SizedBox(width: 4),
+                    Text(likes, style: const TextStyle(color: Colors.grey)),
+                  ],
+                ),
+
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

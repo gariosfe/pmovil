@@ -1,4 +1,6 @@
+// segundo paso para crear una cuenta que cuenta con varios campos que son calle principal, calle secundaria, ciudad y provincia
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,67 +9,52 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CreateAccountStep1(),
+      home: CreateAccountStep2(),
     );
   }
 }
 
-class CreateAccountStep1 extends StatefulWidget {
+class CreateAccountStep2 extends StatefulWidget {
   @override
-  _CreateAccountStep1State createState() => _CreateAccountStep1State();
+  _CreateAccountStep2State createState() => _CreateAccountStep2State();
 }
 
-class _CreateAccountStep1State extends State<CreateAccountStep1> {
-  String? selectedCity;
-  String? selectedProvince;
-
-  // Lista completa de provincias y ciudades de Ecuador
-  final Map<String, List<String>> provincesAndCities = {
-    'Azuay': ['Cuenca', 'Girón', 'Paute', 'Santa Isabel', 'Chordeleg', 'Pucará', 'El Pan'],
-    'Bolívar': ['Guaranda', 'Chillanes', 'Echeandía', 'Las Naves', 'San Miguel', 'Chimbo', 'Alpachaca'],
-    'Cañar': ['Azogues', 'Biblián', 'La Troncal', 'El Tambo', 'Deleg', 'Suscal', 'Ricaurte'],
-    'Carchi': ['Tulcán', 'San Gabriel', 'Espejo', 'Montúfar', 'Huaca', 'Bolívar', 'El Ángel'],
-    'Chimborazo': ['Riobamba', 'Alausí', 'Chunchi', 'Colta', 'Guano', 'Macas', 'Culata'],
-    'Cotopaxi': ['Latacunga', 'Salcedo', 'Saquisilí', 'Pangua', 'La Maná', 'Sigchos', 'Pujilí'],
-    'El Oro': ['Machala', 'Huaquillas', 'Zaruma', 'Piñas', 'Arenillas', 'Las Lajas', 'Balsas'],
-    'Esmeraldas': ['Esmeraldas', 'Atacames', 'Muisne', 'Rioverde', 'Eloy Alfaro', 'Tonchigüe', 'Vuelta Larga'],
-    'Guayas': ['Guayaquil', 'Durán', 'Samborondón', 'Bajoaguas', 'Milagro', 'Balao', 'Naranjal'],
-    'Imbabura': ['Ibarra', 'Otavalo', 'Cotacachi', 'San Miguel de Urcuquí', 'Antonio Ante', 'Pimampiro', 'Lita'],
-    'Loja': ['Loja', 'Catamayo', 'Cariamanga', 'Paltas', 'Calvas', 'Cochancay', 'Saraguro'],
-    'Los Ríos': ['Babahoyo', 'Quevedo', 'Vinces', 'Montalvo', 'Urdaneta', 'Río Verde', 'Carcelén'],
-    'Manabí': ['Portoviejo', 'Manta', 'Chone', 'Jipijapa', 'Pichincha', 'Tosagua', 'El Carmen'],
-    'Morona Santiago': ['Macas', 'Sucúa', 'Gualaquiza', 'Llanganates', 'Huamboya', 'Puyo', 'Celiá'],
-    'Napo': ['Tena', 'Puerto Misahuallí', 'Archidona', 'Carlos Julio Arosemena Tola', 'Yasuni', 'Río Napo'],
-    'Orellana': ['Francisco de Orellana', 'La Joya de los Sachas', 'El Coca', 'Orellana', 'Coca', 'Shushufindi'],
-    'Pastaza': ['Puyo', 'Mera', 'Arajuno', 'Santa Clara', 'El Triunfo', 'Lumbaqui', 'Tena'],
-    'Pichincha': ['Quito', 'Rumiñahui', 'Mejía', 'Cayambe', 'Puerto Quito', 'Nanegal', 'Tababela'],
-    'Tungurahua': ['Ambato', 'Baños', 'Pelileo', 'Cevallos', 'Patate', 'Mocha', 'Totorillas'],
-    'Zamora-Chinchipe': ['Zamora', 'Loja', 'Yantzaza', 'Chinchipe', 'Centinela del Cóndor', 'Nangaritza', 'Palanda'],
-  };
-
-  List<String> cities = [];
-
-  @override
-  void initState() {
-    super.initState();
-    cities = provincesAndCities['Pichincha']!; // Inicializa las ciudades por defecto (Pichincha)
-  }
+class _CreateAccountStep2State extends State<CreateAccountStep2> {
+  final FocusNode mainStreetFocus = FocusNode();
+  final FocusNode secondaryStreetFocus = FocusNode();
+  final FocusNode cityFocus = FocusNode();
+  final FocusNode provinceFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
+    const backgroundColor = Color.fromARGB(255, 11, 61, 77);
+    const accentColor = Color(0xFF64B5F6);
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 11, 61, 77),
+      backgroundColor: backgroundColor,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Aquí Logo",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              // Logo
+              Container(
+                height: 100,
+                width: 100,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.2),
+                    width: 2,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/img/logo.png', // Ruta de la imagen del logo
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -75,133 +62,170 @@ class _CreateAccountStep1State extends State<CreateAccountStep1> {
                 width: MediaQuery.of(context).size.width * 0.85,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE8F7FF),
+                  color: Colors.black.withOpacity(0.85),
                   borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.1),
+                    width: 1,
+                  ),
                 ),
                 child: Column(
                   children: [
                     const Text(
-                      "Create your account - step 2",
+                      "Crear tu cuenta - paso 2",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF043955),
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      focusNode: mainStreetFocus,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: "Main Address",  // Cambiado de "Main Street" a "Main Address"
+                        labelText: "Calle Principal",
+                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.grey),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.white.withOpacity(0.1),
                       ),
                       textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(height: 10),
                     TextField(
+                      focusNode: secondaryStreetFocus,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: "Secondary Address",  // Cambiado de "Secondary Street" a "Secondary Address"
+                        labelText: "Segunda Calle",
+                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.grey),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.white.withOpacity(0.1),
                       ),
                       textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(height: 10),
-                    DropdownButtonFormField<String>(
-                      value: selectedProvince,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedProvince = newValue;
-                          cities = provincesAndCities[newValue!]!;
-                        });
-                      },
+                    TextField(
+                      focusNode: cityFocus,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: "Province",
+                        labelText: "Ciudad",
+                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.grey),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.white.withOpacity(0.1),
                       ),
-                      items: provincesAndCities.keys.map((String province) {
-                        return DropdownMenuItem<String>(
-                          value: province,
-                          child: Text(province),
-                        );
-                      }).toList(),
+                      textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(height: 10),
-                    DropdownButtonFormField<String>(
-                      value: selectedCity,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedCity = newValue;
-                        });
-                      },
+                    TextField(
+                      focusNode: provinceFocus,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: "City",
+                        labelText: "Provincia",
+                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.grey),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.white.withOpacity(0.1),
                       ),
-                      items: cities.map((String city) {
-                        return DropdownMenuItem<String>(
-                          value: city,
-                          child: Text(city),
-                        );
-                      }).toList(),
+                      textInputAction: TextInputAction.done,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30), // Espacio entre el contenedor y los botones
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  Container(
+                    width: 150,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF00796B), Color(0xFF2A7A94)],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 10,
-                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFF00796B).withOpacity(0.5),
+                          blurRadius: 15,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      // Acción para el botón "Back"
-                    },
-                    child: const Text(
-                      "Back",
-                      style: TextStyle(color: Colors.white),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Acción para el botón "Atrás"
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Atrás",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  Container(
+                    width: 150,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF00796B), Color(0xFF2A7A94)],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 10,
-                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFF00796B).withOpacity(0.5),
+                          blurRadius: 15,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      // Acción para el botón "Next"
-                    },
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: Colors.black),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Acción para el botón "Siguiente"
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Siguiente",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ],

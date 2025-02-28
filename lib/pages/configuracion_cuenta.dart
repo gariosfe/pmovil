@@ -1,3 +1,4 @@
+// configuracion de la cuenta donde contiene los campos: nombre del usuario, foto de perfil, fecha de cumpleaños, genero, entre otros...
 import 'package:flutter/material.dart';
 
 void main() {

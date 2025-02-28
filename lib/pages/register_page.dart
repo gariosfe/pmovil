@@ -1,4 +1,26 @@
+// eliminar esta vista porque ya estan 3 vistas creadas de crear una cuenta entonces estaria de mas
 import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Registrar',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        useMaterial3: true,
+      ),
+      home: const RegisterPage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
